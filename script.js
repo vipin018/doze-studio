@@ -67,13 +67,24 @@ function startAnimation() {
         },
     });
 
-    tl.to(frames, {
-        currentIndex: frames.maxIndex,
-        onUpdate: () => {
-            loadImages(Math.floor(frames.currentIndex));
-        },
-        ease: "none",
-    });
+    function updateFrames(index) {
+        return {
+            currentIndex: index,
+            ease: "linear.inOut",
+            onUpdate: () => {
+                loadImages(Math.floor(frames.currentIndex));
+            },
+            ease: "none",
+        }
+    }
+
+    tl
+        .to(frames, updateFrames(frames.maxIndex), 'a')
+        .to(".animate1", {
+            opacity: 0,
+            duration: 1,
+            ease: "power1.inOut"
+        }, 'a')
 }
 
 // Handle window resize
